@@ -23,8 +23,9 @@ const Navbar = () => {
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-8 items-center relative text-lg font-medium h-auto">
           <Link href="/" className="hover:text-cyan-300 transition-all duration-300">Home</Link>
+          <Link href="/products" className="hover:text-cyan-300 transition-all duration-300">Products</Link>
           <Link href="/about" className="hover:text-cyan-300 transition-all duration-300">About</Link>
-          <Link href="/Contact" className="hover:text-cyan-300 transition-all duration-300">Contact</Link>
+          <Link href="/contact" className="hover:text-cyan-300 transition-all duration-300">Contact</Link>
           <Link href="/feedback" className="hover:text-cyan-300 transition-all duration-300">Feedback</Link>
           <Link href="/services" className="hover:text-cyan-300 transition-all duration-300">Services</Link>
 
@@ -70,8 +71,9 @@ const Navbar = () => {
       {isOpen && (
         <div className="md:hidden bg-[#1e293b] px-6 pb-4 text-white space-y-2 text-base">
           <Link href="/" className="block py-2 hover:text-cyan-300 transition">Home</Link>
+          <Link href="/products" className="block py-2 hover:text-cyan-300 transition">Products</Link>
           <Link href="/about" className="block py-2 hover:text-cyan-300 transition">About</Link>
-          <Link href="/Contact" className="block py-2 hover:text-cyan-300 transition">Contact</Link>
+          <Link href="/contact" className="block py-2 hover:text-cyan-300 transition">Contact</Link>
           <Link href="/feedback" className="block py-2 hover:text-cyan-300 transition">Feedback</Link>
           <Link href="/services" className="block py-2 hover:text-cyan-300 transition">Services</Link>
 
