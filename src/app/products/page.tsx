@@ -1,15 +1,25 @@
 import Link from 'next/link';
 import { Product } from '@/types';
 
-export default async function Products() {
-  const res = await fetch("https://fakestoreapi.com/products");
-  const products: Product[] = await res.json();
+export const dynamic = 'force-dynamic';
 
-  return (
-    <div className="container mx-auto p-5">
-      <h1 className="text-3xl font-bold text-center mb-8">Featured Products</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {products.map((product) => (
+export default async function Products() {
+  try {
+    const res = await fetch("https://fakestoreapi.com/products", {
+      cache: 'no-store'
+    });
+
+    if (!res.ok) {
+      throw new Error('Failed to fetch products');
+    }
+
+    const products: Product[] = await res.json();
+
+    return (
+      <div className="container mx-auto p-5">
+        <h1 className="text-3xl font-bold text-center mb-8">Featured Products</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {products.map((product) => (
           <Link href={`/products/${product.id}`} key={product.id}>
             <div className="bg-white shadow-lg rounded-lg p-5 transition-transform transform hover:scale-105 cursor-pointer">
               <img src={product.image} alt={product.title} className="w-full h-40 object-contain mb-4" />
@@ -25,4 +35,12 @@ export default async function Products() {
       </div>
     </div>
   );
+  } catch {
+    return (
+      <div className="container mx-auto p-5">
+        <h1 className="text-3xl font-bold text-center mb-8">Featured Products</h1>
+        <p className="text-center text-red-600">Failed to load products. Please try again later.</p>
+      </div>
+    );
+  }
 }
