@@ -1,20 +1,10 @@
 'use client';
 import { createContext, useContext, useState, ReactNode } from 'react';
-
-interface Product {
-  id: number;
-  title: string;
-  image: string;
-  price: number;
-}
-
-interface CartItem extends Product {
-  quantity: number;
-}
+import { Product, CartItem } from '@/types';
 
 interface CartContextType {
   cart: CartItem[];
-  addToCart: (product: Product) => void;
+  addToCart: (product: Product, quantity?: number, size?: string, color?: string) => void;
   removeFromCart: (productId: number) => void;
 }
 
@@ -23,15 +13,17 @@ const CartContext = createContext<CartContextType | null>(null);
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
 
-  const addToCart = (product: Product) => {
+  const addToCart = (product: Product, quantity = 1, size?: string, color?: string) => {
     setCart((prev) => {
-      const exists = prev.find((item) => item.id === product.id);
+      const exists = prev.find((item) => item.id === product.id && item.size === size && item.color === color);
       if (exists) {
         return prev.map((item) =>
-          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+          item.id === product.id && item.size === size && item.color === color
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
         );
       } else {
-        return [...prev, { ...product, quantity: 1 }];
+        return [...prev, { ...product, quantity, size, color }];
       }
     });
   };

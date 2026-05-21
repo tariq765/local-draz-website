@@ -1,9 +1,10 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useCart } from '@/context/CartContext';
+import { Product } from '@/types';
 
 export default function ProductDetail({ params }: { params: { id: string } }) {
-  const [product, setProduct] = useState<any>(null);
+  const [product, setProduct] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState('M'); // 🔹 Default size = Medium
   const [selectedColor, setSelectedColor] = useState('Red'); // 🔴 Default color
@@ -22,13 +23,8 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
   const decreaseQty = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
   const handleAddToCart = () => {
-    const productWithExtras = {
-      ...product,
-      quantity,
-      size: selectedSize,
-      color: selectedColor, // ✅ Color added to cart item
-    };
-    addToCart(productWithExtras);
+    if (!product) return;
+    addToCart(product, quantity, selectedSize, selectedColor);
   };
 
   if (!product) return <div>Loading...</div>;

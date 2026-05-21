@@ -1,5 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {    "@tailwindcss/postcss": {},
-};
+const nextConfig = {};
 
 export default nextConfig;
