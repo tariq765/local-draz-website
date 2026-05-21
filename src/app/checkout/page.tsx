@@ -1,5 +1,5 @@
 import React from 'react';
-import CheckoutForm from './../../components/checkoutForm';
+import CheckoutForm from './../../components/checkoutform';
 
 const CheckoutPage: React.FC = () => {
   return (
