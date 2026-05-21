@@ -1,12 +1,12 @@
 import Link from 'next/link';
 import { Product } from '@/types';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 3600; // Revalidate every hour
 
 export default async function Products() {
   try {
     const res = await fetch("https://fakestoreapi.com/products", {
-      cache: 'no-store'
+      next: { revalidate: 3600 }
     });
 
     if (!res.ok) {
@@ -14,6 +14,10 @@ export default async function Products() {
     }
 
     const products: Product[] = await res.json();
+
+    if (!products || products.length === 0) {
+      throw new Error('No products found');
+    }
 
     return (
       <div className="container mx-auto p-5">
@@ -35,11 +39,13 @@ export default async function Products() {
       </div>
     </div>
   );
-  } catch {
+  } catch (error) {
+    console.error('Products fetch error:', error);
     return (
       <div className="container mx-auto p-5">
         <h1 className="text-3xl font-bold text-center mb-8">Featured Products</h1>
-        <p className="text-center text-red-600">Failed to load products. Please try again later.</p>
+        <p className="text-center text-red-600">Unable to load products at the moment. Please try again later.</p>
+        <p className="text-center text-gray-500 mt-2">If this issue persists, please contact support.</p>
       </div>
     );
   }
