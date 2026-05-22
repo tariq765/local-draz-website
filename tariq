@@ -1,0 +1,4 @@
+.env.local
+
+NEXT_PUBLIC_PAYFAST_MERCHANT_ID=your_sandbox_merchant_id
+NEXT_PUBLIC_PAYFAST_MERCHANT_PASSWORD=your_sandbox_merchant_password
